@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FoodBridge — From Surplus to Sustenance
 
 > A full-stack food redistribution platform connecting providers with surplus food to verified organizations that can redistribute it to people in need.
@@ -323,3 +324,6 @@ Test classes:
 | JdbcTemplate (JDBC) | All 9 repository classes use parameterized JdbcTemplate queries |
 | MongoDB | Supplementary document store with graceful fallback |
 | EXPLAIN | `analytical_queries.sql` includes EXPLAIN on active listing search |
+=======
+# FoodBridge
+>>>>>>> 1f81f3aa8723ba264d3a8728f2de38433f7b06cc
