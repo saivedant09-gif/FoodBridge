@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodBridge - Provider Dashboard</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="dashboard-wrapper">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <i class="fa-solid fa-leaf"></i>
+        <span>FoodBridge</span>
+      </a>
+
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="userDisplayName">Loading...</div>
+        <div class="sidebar-user-role"><i class="fa-solid fa-store me-1"></i>Food Provider</div>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-item">
+          <a href="provider-dashboard.html" class="nav-link active">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="../pages/food-listings.html" class="nav-link">
+            <i class="fa-solid fa-list-check"></i> My Listings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="../pages/create-listing.html" class="nav-link">
+            <i class="fa-solid fa-plus-circle"></i> Create Listing
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="../pages/notifications.html" class="nav-link">
+            <i class="fa-solid fa-bell"></i> Notifications
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="../pages/organization-profile.html" class="nav-link">
+            <i class="fa-solid fa-building"></i> Profile
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline-light btn-sm w-100" id="logoutBtn">
+          <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <header class="dashboard-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="header-title">
+            <h1>Provider Operations</h1>
+            <p>Monitor your surplus donations and incoming claims</p>
+          </div>
+        </div>
+        <div>
+          <a href="../pages/create-listing.html" class="btn btn-primary-forest">
+            <i class="fa-solid fa-plus me-2"></i>Create Listing
+          </a>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <div id="alertContainer"></div>
+
+        <!-- Metric Cards -->
+        <div class="row g-4 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon forest">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </div>
+              <div class="stat-data">
+                <div class="stat-number" id="statTotalListings">-</div>
+                <div class="stat-label">Total Listings</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon amber">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div class="stat-data">
+                <div class="stat-number" id="statActiveListings">-</div>
+                <div class="stat-label">Active Listings</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+              </div>
+              <div class="stat-data">
+                <div class="stat-number" id="statPendingRequests">-</div>
+                <div class="stat-label">Pending Requests</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+              <div class="stat-icon purple">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+              <div class="stat-data">
+                <div class="stat-number" id="statCompletedCollections">-</div>
+                <div class="stat-label">Completed Collections</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Recent Listings -->
+          <div class="col-lg-8">
+            <div class="card card-custom">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold text-deep-green">Recent Food Listings</h6>
+                <a href="../pages/food-listings.html" class="btn btn-sm btn-outline-forest">View All</a>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Food Item</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Expires</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recentListingsTable">
+                      <tr>
+                        <td colspan="5" class="text-center py-4">
+                          <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Requests / Recent Activity -->
+          <div class="col-lg-4">
+            <div class="card card-custom">
+              <div class="card-header">
+                <h6 class="mb-0 fw-bold text-deep-green">Pending Claims & Pickups</h6>
+              </div>
+              <div class="card-body">
+                <div id="pendingRequestsList">
+                  <p class="text-muted small">No pending requests requiring review.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      Common.initMobileSidebar();
+      const user = await Auth.checkAuth();
+      if (!user) return;
+      if (!Auth.checkRole('PROVIDER')) return;
+
+      document.getElementById('userDisplayName').textContent = user.fullName || user.email;
+      document.getElementById('logoutBtn').addEventListener('click', Auth.logout);
+
+      loadProviderData();
+    });
+
+    async function loadProviderData() {
+      try {
+        // Analytics
+        const analyticsRes = await API.get('/analytics/provider');
+        const analytics = analyticsRes.data || analyticsRes;
+        document.getElementById('statTotalListings').textContent = analytics.totalListings ?? 0;
+        document.getElementById('statActiveListings').textContent = analytics.activeListings ?? 0;
+        document.getElementById('statPendingRequests').textContent = analytics.pendingRequests ?? 0;
+        document.getElementById('statCompletedCollections').textContent = analytics.completedCollections ?? 0;
+      } catch (err) {
+        console.warn('Could not load provider analytics', err);
+        document.getElementById('statTotalListings').textContent = '0';
+        document.getElementById('statActiveListings').textContent = '0';
+        document.getElementById('statPendingRequests').textContent = '0';
+        document.getElementById('statCompletedCollections').textContent = '0';
+      }
+
+      try {
+        // Recent listings
+        const listingsRes = await API.get('/provider/listings?page=0&size=5');
+        const list = (listingsRes.data && listingsRes.data.content) ? listingsRes.data.content : (Array.isArray(listingsRes.data) ? listingsRes.data : []);
+        const tableBody = document.getElementById('recentListingsTable');
+
+        if (!list || list.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="5">${Common.emptyState('No listings created yet. Click "+ Create Listing" to start donating.')}</td></tr>`;
+        } else {
+          tableBody.innerHTML = list.map(item => `
+            <tr>
+              <td class="fw-bold text-dark">${item.title || item.foodName}</td>
+              <td><span class="badge-category">${item.category || 'General'}</span></td>
+              <td>${Common.formatQuantity(item.availableQuantity ?? item.quantity, item.unit)}</td>
+              <td class="small text-muted">${Common.formatDateTime(item.expiresAt)}</td>
+              <td>${Common.statusBadge(item.status)}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        document.getElementById('recentListingsTable').innerHTML = `
+          <tr><td colspan="5" class="text-center text-muted py-3">Could not fetch listings.</td></tr>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Details — FoodBridge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success py-2 shadow-sm" style="background-color: var(--fb-deep-green, #104D34) !important;">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="../index.html">
+                <i class="fa-solid fa-hand-holding-heart me-2 text-warning"></i> FoodBridge
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white" href="available-food.html"><i class="fa-solid fa-arrow-left me-1"></i> Back to Marketplace</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div id="alertBox"></div>
+        <div id="loadingSpinner" class="text-center py-5">
+            <div class="fb-loader"></div>
+            <p class="text-muted mt-2">Loading surplus listing details...</p>
+        </div>
+
+        <div id="listingContent" class="d-none">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <span id="categoryBadge" class="badge bg-secondary mb-2">Category</span>
+                                <h2 id="foodName" class="fw-bold mb-1 text-dark">Food Title</h2>
+                                <p id="providerName" class="text-muted mb-0"><i class="fa-solid fa-building me-1"></i> Provider Organization</p>
+                            </div>
+                            <span id="statusBadge" class="badge-status active">ACTIVE</span>
+                        </div>
+                        <hr class="text-muted my-3">
+                        <h6 class="fw-bold text-uppercase text-muted small">Description</h6>
+                        <p id="description" class="text-secondary lead fs-6">Description text...</p>
+
+                        <div class="row g-3 my-3">
+                            <div class="col-sm-6">
+                                <div class="p-3 bg-light rounded-3">
+                                    <small class="text-muted d-block">Available Quantity</small>
+                                    <h4 id="quantity" class="fw-bold text-success mb-0">0 portions</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="p-3 bg-light rounded-3">
+                                    <small class="text-muted d-block">Pickup Deadline</small>
+                                    <h5 id="pickupDeadline" class="fw-bold text-danger mb-0">--</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="p-3 bg-light rounded-3">
+                                    <small class="text-muted d-block">Best Before / Expiry</small>
+                                    <span id="expiresAt" class="fw-semibold">--</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="p-3 bg-light rounded-3">
+                                    <small class="text-muted d-block">Dietary Declaration</small>
+                                    <span id="dietaryInfo" class="badge bg-success">Vegetarian</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6 class="fw-bold text-uppercase text-muted small mt-4">Pickup Location</h6>
+                        <p id="pickupAddress" class="text-secondary mb-2"><i class="fa-solid fa-location-dot me-2 text-danger"></i> Address...</p>
+                        <p id="allergenNotes" class="small text-muted mb-0"><i class="fa-solid fa-triangle-exclamation me-1 text-warning"></i> Allergens: None declared</p>
+                    </div>
+                </div>
+
+                <!-- Claim Form Sidebar (for Recipient) -->
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 2rem;">
+                        <h4 class="fw-bold mb-3">Request This Food</h4>
+                        <p class="text-muted small">Claim a portion of this surplus for verified distribution.</p>
+                        <form id="claimForm">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Quantity Needed (<span id="unitSpan">portions</span>)</label>
+                                <input type="number" id="claimQty" class="form-control form-control-lg" step="0.5" min="1" required>
+                                <div class="form-text">Cannot exceed available quantity.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Distribution Note / Message</label>
+                                <textarea id="claimMsg" class="form-control" rows="3" placeholder="Explain your collection plan or beneficiaries..." required></textarea>
+                            </div>
+                            <button type="submit" id="submitClaimBtn" class="btn btn-success btn-lg w-100 shadow-sm" style="background-color: var(--fb-primary, #176B45);">
+                                <i class="fa-solid fa-paper-plane me-2"></i> Submit Claim Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/common.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const listingId = urlParams.get('id');
+
+        async function loadListing() {
+            if (!listingId) {
+                showAlert('No listing ID specified in URL.', 'danger', 'alertBox');
+                document.getElementById('loadingSpinner').classList.add('d-none');
+                return;
+            }
+            try {
+                const res = await API.get('/listings/' + listingId);
+                const listing = res.data;
+                document.getElementById('foodName').textContent = listing.foodName;
+                document.getElementById('categoryBadge').textContent = listing.category;
+                document.getElementById('providerName').innerHTML = '<i class="fa-solid fa-building me-1"></i> ' + (listing.providerName || 'Provider Org');
+                document.getElementById('description').textContent = listing.description || 'No additional description provided.';
+                document.getElementById('quantity').textContent = listing.availableQuantity + ' ' + listing.unit;
+                document.getElementById('unitSpan').textContent = listing.unit;
+                document.getElementById('claimQty').max = listing.availableQuantity;
+                document.getElementById('pickupDeadline').textContent = formatDateTime(listing.pickupDeadline);
+                document.getElementById('expiresAt').textContent = formatDateTime(listing.expiresAt);
+                document.getElementById('dietaryInfo').textContent = listing.dietaryInfo || 'Standard';
+                document.getElementById('pickupAddress').innerHTML = '<i class="fa-solid fa-location-dot me-2 text-danger"></i> ' + listing.pickupAddress + (listing.pickupCity ? ', ' + listing.pickupCity : '');
+                if (listing.allergenNotes) {
+                    document.getElementById('allergenNotes').textContent = 'Allergens: ' + listing.allergenNotes;
+                }
+                document.getElementById('statusBadge').textContent = listing.listingStatus;
+                document.getElementById('loadingSpinner').classList.add('d-none');
+                document.getElementById('listingContent').classList.remove('d-none');
+            } catch (err) {
+                document.getElementById('loadingSpinner').classList.add('d-none');
+                showAlert('Failed to load listing: ' + err.message, 'danger', 'alertBox');
+            }
+        }
+
+        document.getElementById('claimForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const qty = parseFloat(document.getElementById('claimQty').value);
+            const msg = document.getElementById('claimMsg').value;
+            const btn = document.getElementById('submitClaimBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Submitting...';
+
+            try {
+                await API.post('/listings/' + listingId + '/requests', {
+                    requestedQuantity: qty,
+                    message: msg
+                });
+                showAlert('Claim request submitted successfully! Redirecting to your requests...', 'success', 'alertBox');
+                setTimeout(() => {
+                    window.location.href = 'my-requests.html';
+                }, 1500);
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Claim Request';
+                showAlert(err.message, 'danger', 'alertBox');
+            }
+        });
+
+        loadListing();
+    </script>
+</body>
+</html>

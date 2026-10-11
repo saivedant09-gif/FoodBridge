@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodBridge - Register Organization</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="bg-mint py-5">
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-xl-7">
+        
+        <div class="text-center mb-4">
+          <a href="index.html" class="text-decoration-none">
+            <h2 class="fw-bold text-deep-green d-inline-flex align-items-center gap-2">
+              <i class="fa-solid fa-leaf text-amber"></i> FoodBridge
+            </h2>
+          </a>
+          <p class="text-muted small">Join our network of food donors and verified community recipients</p>
+        </div>
+
+        <div class="form-card">
+          <div class="form-header text-start mb-4">
+            <h3 class="fw-bold text-deep-green mb-1">Create Account</h3>
+            <p class="text-muted small mb-0">Register your organization details for account verification</p>
+          </div>
+
+          <div id="alertContainer"></div>
+
+          <form id="registerForm">
+            <!-- Account Role Selection -->
+            <div class="mb-4">
+              <label class="form-label d-block">I am registering as:</label>
+              <div class="row g-2">
+                <div class="col-sm-6">
+                  <div class="card p-3 border h-100 text-center role-select-card" id="cardProvider" style="cursor: pointer;">
+                    <div class="form-check d-flex justify-content-center align-items-center gap-2 mb-1">
+                      <input class="form-check-input" type="radio" name="role" id="roleProvider" value="PROVIDER" checked>
+                      <label class="form-check-label fw-bold text-deep-green" for="roleProvider">Food Provider</label>
+                    </div>
+                    <small class="text-muted">Restaurant, Bakery, Supermarket, Caterer, Farm</small>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card p-3 border h-100 text-center role-select-card" id="cardRecipient" style="cursor: pointer;">
+                    <div class="form-check d-flex justify-content-center align-items-center gap-2 mb-1">
+                      <input class="form-check-input" type="radio" name="role" id="roleRecipient" value="RECIPIENT">
+                      <label class="form-check-label fw-bold text-deep-green" for="roleRecipient">Food Recipient</label>
+                    </div>
+                    <small class="text-muted">Shelter, Food Bank, NGO, Community Kitchen, Charity</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section: Personal Info -->
+            <div class="form-section-title">
+              <i class="fa-solid fa-user me-2"></i>Personal Contact Information
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="fullName" class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="fullName" required placeholder="Jane Doe">
+              </div>
+              <div class="col-md-6">
+                <label for="phone" class="form-label">Phone Number *</label>
+                <input type="tel" class="form-control" id="phone" required placeholder="+1 (555) 000-0000">
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" class="form-control" id="email" required placeholder="contact@organization.org">
+              </div>
+              <div class="col-md-6">
+                <label for="password" class="form-label">Password *</label>
+                <input type="password" class="form-control" id="password" required minlength="6" placeholder="Min. 6 characters">
+              </div>
+            </div>
+
+            <!-- Section: Organization Info -->
+            <div class="form-section-title mt-4">
+              <i class="fa-solid fa-building me-2"></i>Organization Details
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-7">
+                <label for="orgName" class="form-label">Organization Name *</label>
+                <input type="text" class="form-control" id="orgName" required placeholder="Green Table Bistro / Hope Pantry">
+              </div>
+              <div class="col-md-5">
+                <label for="orgType" class="form-label">Organization Type *</label>
+                <select class="form-select" id="orgType" required>
+                  <option value="" disabled selected>Select type</option>
+                  <option value="RESTAURANT">Restaurant / Cafe</option>
+                  <option value="GROCERY">Grocery / Supermarket</option>
+                  <option value="BAKERY">Bakery</option>
+                  <option value="CATERER">Catering Service</option>
+                  <option value="FOOD_BANK">Food Bank</option>
+                  <option value="SHELTER">Homeless Shelter</option>
+                  <option value="COMMUNITY_KITCHEN">Community Kitchen</option>
+                  <option value="OTHER">Other Non-Profit / Business</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="orgDescription" class="form-label">Description / Mission</label>
+                <textarea class="form-control" id="orgDescription" rows="2" placeholder="Briefly describe your food operations or community outreach..."></textarea>
+              </div>
+              <div class="col-12">
+                <label for="address" class="form-label">Physical Address *</label>
+                <input type="text" class="form-control" id="address" required placeholder="123 Harmony Way, Suite 400">
+              </div>
+              <div class="col-md-5">
+                <label for="city" class="form-label">City *</label>
+                <input type="text" class="form-control" id="city" required placeholder="Seattle">
+              </div>
+              <div class="col-md-4">
+                <label for="state" class="form-label">State / Province *</label>
+                <input type="text" class="form-control" id="state" required placeholder="WA">
+              </div>
+              <div class="col-md-3">
+                <label for="pincode" class="form-label">Postal Code *</label>
+                <input type="text" class="form-control" id="pincode" required placeholder="98101">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-form-submit mt-4" id="submitBtn">
+              <span id="btnText">Create Organization Account</span>
+              <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+            </button>
+          </form>
+
+          <div class="auth-switch-link">
+            Already have an account? <a href="login.html">Sign in here</a>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="index.html" class="text-muted small text-decoration-none">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Homepage
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    // Handle URL role parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const roleParam = urlParams.get('role');
+    if (roleParam && roleParam.toUpperCase() === 'RECIPIENT') {
+      document.getElementById('roleRecipient').checked = true;
+    }
+
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const selectedRole = document.querySelector('input[name="role"]:checked').value;
+      const payload = {
+        fullName: document.getElementById('fullName').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        role: selectedRole,
+        organizationName: document.getElementById('orgName').value.trim(),
+        organizationType: document.getElementById('orgType').value,
+        organizationDescription: document.getElementById('orgDescription').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        state: document.getElementById('state').value.trim(),
+        pincode: document.getElementById('pincode').value.trim()
+      };
+
+      submitBtn.disabled = true;
+      btnSpinner.classList.remove('d-none');
+      btnText.textContent = 'Registering organization...';
+
+      try {
+        await API.post('/auth/register', payload);
+        Common.showAlert('Registration complete! Redirecting to login...', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html?registered=true';
+        }, 1000);
+      } catch (err) {
+        Common.showAlert(err.message || 'Registration failed. Please check form values.', 'error');
+        submitBtn.disabled = false;
+        btnSpinner.classList.add('d-none');
+        btnText.textContent = 'Create Organization Account';
+      }
+    });
+  </script>
+</body>
+</html>

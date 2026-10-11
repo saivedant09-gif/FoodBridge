@@ -1,0 +1,51 @@
+[
+  {
+    "_collection": "listing_metadata",
+    "note": "Supplementary optional metadata. Core listing data is in MySQL.",
+    "mysqlListingId": 1,
+    "imagePaths": ["images/listing1_img1.jpg", "images/listing1_img2.jpg"],
+    "handlingInstructions": ["Keep hot above 60°C", "Serve within 2 hours of pickup"],
+    "additionalAttributes": {
+      "servings_per_portion": "1",
+      "cuisine_type": "South Indian",
+      "container_type": "Foil trays (100 units)"
+    },
+    "storageInstructions": "Keep covered and hot. Do not refrigerate cooked rice.",
+    "packagingNotes": "Pre-portioned in sealed foil trays",
+    "requiresRefrigeration": false,
+    "createdAt": {"$date": "2026-10-11T06:30:00.000Z"},
+    "updatedAt": {"$date": "2026-10-11T06:30:00.000Z"}
+  },
+  {
+    "_collection": "listing_metadata",
+    "mysqlListingId": 3,
+    "imagePaths": [],
+    "handlingInstructions": ["Store in cool dry place", "Best consumed within 24 hours"],
+    "additionalAttributes": {
+      "bread_type": "Whole Wheat Sandwich Loaf",
+      "slices_per_loaf": "20",
+      "weight_per_loaf_grams": "400"
+    },
+    "storageInstructions": "Room temperature in original wrapping",
+    "packagingNotes": "Original packaging intact",
+    "requiresRefrigeration": false,
+    "createdAt": {"$date": "2026-10-11T06:00:00.000Z"},
+    "updatedAt": {"$date": "2026-10-11T06:00:00.000Z"}
+  },
+  {
+    "_collection": "organization_profiles",
+    "note": "Supplementary profile. Core org data is in MySQL.",
+    "mysqlOrgId": 5,
+    "socialLinks": {
+      "website": "https://vellorехоpe.org",
+      "facebook": "https://facebook.com/vellorехоpe"
+    },
+    "mission": "Ensuring no one sleeps hungry in Vellore district through food redistribution and community outreach.",
+    "servicesOffered": ["Daily meal distribution", "Shelter for homeless", "Community outreach"],
+    "operatingHours": "6:00 AM - 10:00 PM daily",
+    "beneficiariesServedMonthly": 450,
+    "certifications": ["12A Registration", "80G Tax Exemption", "FCRA Compliant"],
+    "createdAt": {"$date": "2026-01-11T08:00:00.000Z"},
+    "updatedAt": {"$date": "2026-01-11T08:00:00.000Z"}
+  }
+]

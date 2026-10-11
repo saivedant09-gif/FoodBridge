@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodBridge - Create Surplus Food Listing</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <i class="fa-solid fa-leaf"></i>
+        <span>FoodBridge</span>
+      </a>
+
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="userDisplayName">Loading...</div>
+        <div class="sidebar-user-role"><i class="fa-solid fa-store me-1"></i>Food Provider</div>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-item">
+          <a href="../dashboards/provider-dashboard.html" class="nav-link">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="food-listings.html" class="nav-link">
+            <i class="fa-solid fa-list-check"></i> My Listings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="create-listing.html" class="nav-link active">
+            <i class="fa-solid fa-plus-circle"></i> Create Listing
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="notifications.html" class="nav-link">
+            <i class="fa-solid fa-bell"></i> Notifications
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="organization-profile.html" class="nav-link">
+            <i class="fa-solid fa-building"></i> Profile
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline-light btn-sm w-100" id="logoutBtn">
+          <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <header class="dashboard-header">
+        <div class="d-flex align-items-center gap-3">
+          <button class="sidebar-toggle-btn" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="header-title">
+            <h1>Create Surplus Food Listing</h1>
+            <p>Post excess edible surplus to be claimed by verified non-profits</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+        <div class="row justify-content-center">
+          <div class="col-xl-9">
+            <div id="alertContainer"></div>
+
+            <div class="form-card">
+              <form id="createListingForm">
+                
+                <!-- Food Description Section -->
+                <div class="form-section-title">
+                  <i class="fa-solid fa-utensils me-2"></i>Food Details
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label for="foodName" class="form-label">Food Name / Title *</label>
+                    <input type="text" class="form-control" id="foodName" required placeholder="e.g. Fresh Artisan Sourdough Bread, Prepared Pasta Trays">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="category" class="form-label">Food Category *</label>
+                    <select class="form-select" id="category" required>
+                      <option value="" disabled selected>Select category</option>
+                      <option value="PRODUCE">Produce (Fruits & Veggies)</option>
+                      <option value="BAKERY">Bakery Goods</option>
+                      <option value="PREPARED_MEALS">Prepared Cooked Meals</option>
+                      <option value="PACKAGED_GOODS">Packaged Shelf-Stable</option>
+                      <option value="DAIRY_EGGS">Dairy & Eggs</option>
+                      <option value="BEVERAGES">Beverages</option>
+                      <option value="OTHER">Other Perishable</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label for="description" class="form-label">Description & Handling Details</label>
+                    <textarea class="form-control" id="description" rows="2" placeholder="Describe packaging condition, temperature storage requirements, etc."></textarea>
+                  </div>
+                </div>
+
+                <!-- Quantity Section -->
+                <div class="row g-3 mt-1">
+                  <div class="col-md-6">
+                    <label for="quantity" class="form-label">Total Quantity *</label>
+                    <input type="number" step="0.5" min="0.1" class="form-control" id="quantity" required placeholder="e.g. 25">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="unit" class="form-label">Unit of Measure *</label>
+                    <select class="form-select" id="unit" required>
+                      <option value="kg">Kilograms (kg)</option>
+                      <option value="lbs">Pounds (lbs)</option>
+                      <option value="portions">Servings / Portions</option>
+                      <option value="boxes">Boxes / Cartons</option>
+                      <option value="items">Individual Items</option>
+                      <option value="trays">Catering Trays</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Dietary & Allergens -->
+                <div class="form-section-title mt-4">
+                  <i class="fa-solid fa-leaf me-2"></i>Dietary & Allergens
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label d-block mb-2">Dietary Attributes (Check all that apply):</label>
+                  <div class="d-flex flex-wrap gap-3">
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="VEGETARIAN" id="dietVeg">
+                      <label class="form-check-label" for="dietVeg">Vegetarian</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="VEGAN" id="dietVegan">
+                      <label class="form-check-label" for="dietVegan">Vegan</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="GLUTEN_FREE" id="dietGf">
+                      <label class="form-check-label" for="dietGf">Gluten-Free</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="HALAL" id="dietHalal">
+                      <label class="form-check-label" for="dietHalal">Halal</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="KOSHER" id="dietKosher">
+                      <label class="form-check-label" for="dietKosher">Kosher</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="NUT_FREE" id="dietNutFree">
+                      <label class="form-check-label" for="dietNutFree">Nut-Free</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input dietary-check" type="checkbox" value="DAIRY_FREE" id="dietDairyFree">
+                      <label class="form-check-label" for="dietDairyFree">Dairy-Free</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="allergenNotes" class="form-label">Allergen / Safety Notes</label>
+                  <input type="text" class="form-control" id="allergenNotes" placeholder="e.g. Prepared in facility processing peanuts, keep refrigerated below 4°C">
+                </div>
+
+                <!-- Timestamps -->
+                <div class="form-section-title mt-4">
+                  <i class="fa-solid fa-clock me-2"></i>Preparation, Expiry & Collection Schedule
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label for="preparedAt" class="form-label">Prepared At</label>
+                    <input type="datetime-local" class="form-control" id="preparedAt">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="expiresAt" class="form-label">Expires At *</label>
+                    <input type="datetime-local" class="form-control" id="expiresAt" required>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="pickupDeadline" class="form-label">Pickup Deadline *</label>
+                    <input type="datetime-local" class="form-control" id="pickupDeadline" required>
+                  </div>
+                </div>
+
+                <!-- Pickup Location -->
+                <div class="form-section-title mt-4">
+                  <i class="fa-solid fa-location-dot me-2"></i>Pickup Address
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <label for="pickupAddress" class="form-label">Street Address *</label>
+                    <input type="text" class="form-control" id="pickupAddress" required placeholder="Kitchen rear loading dock, 456 Market St">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="pickupCity" class="form-label">City *</label>
+                    <input type="text" class="form-control" id="pickupCity" required placeholder="Seattle">
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-form-submit mt-4" id="submitBtn">
+                  <span id="btnText"><i class="fa-solid fa-paper-plane me-2"></i>Publish Food Listing</span>
+                  <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      Common.initMobileSidebar();
+      const user = await Auth.checkAuth();
+      if (!user) return;
+      if (!Auth.checkRole('PROVIDER')) return;
+
+      document.getElementById('userDisplayName').textContent = user.fullName || user.email;
+      document.getElementById('logoutBtn').addEventListener('click', Auth.logout);
+
+      // Pre-fill location if user org has address
+      if (user.address) document.getElementById('pickupAddress').value = user.address;
+      if (user.city) document.getElementById('pickupCity').value = user.city;
+
+      // Default deadlines (expires in 24h, pickup in 18h)
+      const now = new Date();
+      const in18h = new Date(now.getTime() + 18 * 60 * 60 * 1000);
+      const in24h = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      document.getElementById('preparedAt').value = now.toISOString().slice(0, 16);
+      document.getElementById('pickupDeadline').value = in18h.toISOString().slice(0, 16);
+      document.getElementById('expiresAt').value = in24h.toISOString().slice(0, 16);
+    });
+
+    const form = document.getElementById('createListingForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnSpinner = document.getElementById('btnSpinner');
+    const btnText = document.getElementById('btnText');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const dietaryChecks = Array.from(document.querySelectorAll('.dietary-check:checked')).map(cb => cb.value);
+
+      const payload = {
+        title: document.getElementById('foodName').value.trim(),
+        description: document.getElementById('description').value.trim(),
+        category: document.getElementById('category').value,
+        totalQuantity: parseFloat(document.getElementById('quantity').value),
+        unit: document.getElementById('unit').value,
+        dietaryFlags: dietaryChecks.join(','),
+        allergenNotes: document.getElementById('allergenNotes').value.trim(),
+        preparedAt: document.getElementById('preparedAt').value ? new Date(document.getElementById('preparedAt').value).toISOString() : null,
+        expiresAt: new Date(document.getElementById('expiresAt').value).toISOString(),
+        pickupDeadline: new Date(document.getElementById('pickupDeadline').value).toISOString(),
+        pickupAddress: document.getElementById('pickupAddress').value.trim(),
+        pickupCity: document.getElementById('pickupCity').value.trim()
+      };
+
+      submitBtn.disabled = true;
+      btnSpinner.classList.remove('d-none');
+      btnText.textContent = 'Publishing listing...';
+
+      try {
+        await API.post('/listings', payload);
+        Common.showAlert('Surplus listing published successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = 'food-listings.html';
+        }, 1200);
+      } catch (err) {
+        Common.showAlert(err.message || 'Failed to create listing.', 'error');
+        submitBtn.disabled = false;
+        btnSpinner.classList.add('d-none');
+        btnText.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i>Publish Food Listing';
+      }
+    });
+  </script>
+</body>
+</html>

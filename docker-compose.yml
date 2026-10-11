@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # MySQL is expected to run natively on Windows.
+  # This compose file is provided for reference only.
+  # If you prefer Docker for MySQL, uncomment the mysql service below.
+
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: foodbridge-mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+  #     MYSQL_DATABASE: foodbridge
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #     - ./database/mysql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+  #     - ./database/mysql/indexes.sql:/docker-entrypoint-initdb.d/02-indexes.sql
+  #     - ./database/mysql/views.sql:/docker-entrypoint-initdb.d/03-views.sql
+  #     - ./database/mysql/triggers.sql:/docker-entrypoint-initdb.d/04-triggers.sql
+  #     - ./database/mysql/procedures.sql:/docker-entrypoint-initdb.d/05-procedures.sql
+
+  mongodb:
+    image: mongo:7.0
+    container_name: foodbridge-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    # MongoDB is optional for FoodBridge.
+    # Set MONGO_ENABLED=true in .env to enable supplementary document features.
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: foodbridge-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: host.docker.internal
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-foodbridge}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD}
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DATABASE: foodbridge_meta
+      MONGO_ENABLED: ${MONGO_ENABLED:-false}
+    depends_on:
+      - mongodb
+
+volumes:
+  mysql-data:
+  mongo-data:

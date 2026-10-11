@@ -1,0 +1,132 @@
+/* Forms Stylesheet */
+.form-card {
+  background-color: var(--white-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 2.25rem;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-header h2 {
+  font-weight: 700;
+  color: var(--deep-green);
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: var(--muted-text);
+  font-size: 0.95rem;
+}
+
+.form-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--deep-green);
+  border-bottom: 2px solid var(--mint-bg);
+  padding-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--charcoal-text);
+  margin-bottom: 0.35rem;
+}
+
+.form-control,
+.form-select {
+  border: 1px solid #C4D7CC;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--charcoal-text);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-forest);
+  box-shadow: 0 0 0 0.2rem rgba(23, 107, 69, 0.15);
+}
+
+.form-text {
+  font-size: 0.8rem;
+  color: var(--muted-text);
+}
+
+/* Password Toggle Field */
+.password-field-wrap {
+  position: relative;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--muted-text);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-btn:hover {
+  color: var(--charcoal-text);
+}
+
+/* Checkboxes and Radios */
+.form-check-input:checked {
+  background-color: var(--primary-forest);
+  border-color: var(--primary-forest);
+}
+
+.form-check-label {
+  font-size: 0.9rem;
+  color: var(--charcoal-text);
+}
+
+/* Submit & Action Buttons in Forms */
+.btn-form-submit {
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: var(--primary-forest);
+  border-color: var(--primary-forest);
+  color: #FFFFFF;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-form-submit:hover {
+  background-color: var(--deep-green);
+  border-color: var(--deep-green);
+  color: #FFFFFF;
+}
+
+.auth-switch-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
+.auth-switch-link a {
+  color: var(--primary-forest);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch-link a:hover {
+  text-decoration: underline;
+}

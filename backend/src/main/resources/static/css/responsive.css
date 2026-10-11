@@ -1,0 +1,82 @@
+/* Responsive Stylesheet */
+
+/* Mobile Sidebar Toggle Button */
+.sidebar-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--deep-green);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Sidebar Backdrop on Mobile */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop.show {
+    display: block;
+  }
+
+  .sidebar-toggle-btn {
+    display: inline-block;
+  }
+
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-section {
+    padding: 3.5rem 0 3rem;
+  }
+
+  .impact-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .dashboard-header {
+    padding: 1rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .form-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .table-responsive {
+    border: 0;
+  }
+}
+
+/* Ensure tables scroll gracefully on small devices */
+.table-responsive-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
